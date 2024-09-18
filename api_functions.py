@@ -24,7 +24,6 @@ async def get_city_id(city: str) -> int | str:
             return data['items'][0]['id']
 
 async def get_vacancies(city_id: int, job: str, amount: int) -> str:
-    vacancies: list[Vacancy] = []
     text: str = ""
     url = f'https://api.hh.ru/vacancies?host=rabota.by&area={city_id}&text="{job}"&order_by=publication_time&per_page={amount}'
 
@@ -49,11 +48,11 @@ async def get_vacancies(city_id: int, job: str, amount: int) -> str:
             if (instance["salary"] is None):
                 text += "Договорная \n"
             elif (instance["salary"]["to"] is None):
-                text += f"{instance["salary"]["from"]} {instance["salary"]["currency"]} \n"
+                text += f"{instance['salary']['from']} {instance['salary']['currency']} \n"
             elif (instance["salary"]["from"] is None):
-                text += f"{instance["salary"]["to"]} {instance["salary"]["currency"]} \n"
+                text += f"{instance['salary']['to']} {instance['salary']['currency']} \n"
             else:  
-                text += f"От {instance["salary"]["from"]} до {instance["salary"]["to"]} \n"
+                text += f"От {instance['salary']['from']} до {instance['salary']['to']} \n"
 
             text += instance["experience"]["name"] + "\n"
             text += instance["alternate_url"] + "\n"
